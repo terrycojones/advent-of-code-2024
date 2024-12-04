@@ -8,9 +8,9 @@ def count_xmas(a):
     n_cols = len(a[0])
     count = 0
     for row in range(1, n_rows - 1):
-        for i in range(1, n_cols - 1):
-            word1 = "".join(a[row + x][i + x] for x in (-1, 0, 1))
-            word2 = "".join(a[row + x][i - x] for x in (1, 0, -1))
+        for col in range(1, n_cols - 1):
+            word1 = "".join(a[row + i][col + i] for i in (-1, 0, 1))
+            word2 = "".join(a[row + i][col - i] for i in (1, 0, -1))
             count += not ({word1, word2} - {"MAS", "SAM"})
 
     return count
