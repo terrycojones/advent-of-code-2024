@@ -26,10 +26,7 @@ def count_diagonal(a):
     return count
 
 
-original = []
-for line in sys.stdin:
-    original.append(list(line.strip()))
-
+original = [list(line.strip()) for line in sys.stdin]
 rotated = list(zip(*original[::-1]))
 
 count = 0

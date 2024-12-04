@@ -16,8 +16,5 @@ def count_xmas(a):
     return count
 
 
-data = []
-for line in sys.stdin:
-    data.append(list(line.strip()))
-
+data = [list(line.strip()) for line in sys.stdin]
 print(count_xmas(data))
