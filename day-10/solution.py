@@ -5,13 +5,13 @@ import numpy as np
 from collections import defaultdict
 
 
-data = np.array([tuple(map(int, line.strip())) for line in sys.stdin.readlines()])
-counts = np.zeros(data.shape, dtype=int)
-nrows, ncols = data.shape
+grid = np.array([tuple(map(int, line.strip())) for line in sys.stdin.readlines()])
+counts = np.zeros(grid.shape, dtype=int)
 reachable = defaultdict(set)
+nrows, ncols = grid.shape
 
 
-def count_upward(value, row, col, grid, counts):
+def count_upward(value, row, col):
     for rowinc, colinc in ((0, -1), (0, 1), (-1, 0), (1, 0)):
         newrow = row + rowinc
         newcol = col + colinc
@@ -31,14 +31,14 @@ def count_upward(value, row, col, grid, counts):
 for value in range(8, -1, -1):
     for row in range(nrows):
         for col in range(ncols):
-            if data[row, col] == value:
-                count_upward(value, row, col, data, counts)
+            if grid[row, col] == value:
+                count_upward(value, row, col)
 
 result1 = result2 = 0
 
 for row in range(nrows):
     for col in range(ncols):
-        if data[row, col] == 0:
+        if grid[row, col] == 0:
             result1 += len(reachable[(row, col)])
             result2 += counts[row, col]
 
