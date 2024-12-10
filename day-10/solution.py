@@ -12,35 +12,24 @@ nrows, ncols = grid.shape
 
 
 def count_upward(value, row, col):
-    for rowinc, colinc in ((0, -1), (0, 1), (-1, 0), (1, 0)):
-        newrow = row + rowinc
-        newcol = col + colinc
-        if (
-            0 <= newrow < nrows
-            and 0 <= newcol < ncols
-            and grid[newrow, newcol] == value + 1
-        ):
+    for r, c in (row, col - 1), (row, col + 1), (row - 1, col), (row + 1, col):
+        if 0 <= r < nrows and 0 <= c < ncols and grid[r, c] == value + 1:
             if value == 8:
                 counts[row, col] += 1
-                reachable[(row, col)].add((newrow, newcol))
+                reachable[(row, col)].add((r, c))
             else:
-                counts[row, col] += counts[newrow, newcol]
-                reachable[(row, col)].update(reachable[(newrow, newcol)])
+                counts[row, col] += counts[r, c]
+                reachable[(row, col)].update(reachable[(r, c)])
 
 
 for value in range(8, -1, -1):
-    for row in range(nrows):
-        for col in range(ncols):
-            if grid[row, col] == value:
-                count_upward(value, row, col)
+    [count_upward(value, row, col) for row, col in np.argwhere(grid == value)]
 
 result1 = result2 = 0
 
-for row in range(nrows):
-    for col in range(ncols):
-        if grid[row, col] == 0:
-            result1 += len(reachable[(row, col)])
-            result2 += counts[row, col]
+for row, col in np.argwhere(grid == 0):
+    result1 += len(reachable[(row, col)])
+    result2 += counts[row, col]
 
 print("Solution 1:", result1)
 print("Solution 2:", result2)
