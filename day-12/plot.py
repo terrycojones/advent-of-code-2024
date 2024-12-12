@@ -49,12 +49,6 @@ class Plot:
         self.nrows, self.ncols = self.symbols.shape
         self.regions = []
 
-    def symbol(self, site):
-        row, col = site
-        if 0 <= row < self.nrows and 0 <= col < self.ncols:
-            return self.symbols[row, col]
-        return None
-
     def neighbors(self, site):
         row, col = site
         for rinc, cinc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
